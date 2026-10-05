@@ -48,12 +48,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _controller.text.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          _controller.clear();
-                          ref.read(searchQueryProvider.notifier).state = '';
-                        },
-                      )
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    _controller.clear();
+                    ref.read(searchQueryProvider.notifier).state = '';
+                  },
+                )
                     : null,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -101,16 +101,14 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                                 color: Colors.white, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        title: Text(c.name,
-                            style: const TextStyle(fontWeight: FontWeight.w600)),
+                        title: Text(c.name, style: const TextStyle(fontWeight: FontWeight.w600)),
                         subtitle: Text('#${c.serialNumber}  •  ${c.phone ?? "—"}'),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) =>
-                                  CustomerDetailScreen(customerId: c.id),
+                              builder: (_) => CustomerDetailScreen(customerId: c.id),
                             ),
                           );
                         },

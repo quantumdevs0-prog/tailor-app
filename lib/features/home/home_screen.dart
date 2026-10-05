@@ -44,7 +44,6 @@ class HomeScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Total customers card
               Card(
                 color: Theme.of(context).colorScheme.primaryContainer,
                 child: Padding(
@@ -60,9 +59,9 @@ class HomeScreen extends ConsumerWidget {
                         data: (count) => Text(
                           '$count',
                           style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                         loading: () => const CircularProgressIndicator(),
                         error: (_, __) => const Text('—'),
@@ -72,8 +71,6 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // New Customer button
               ElevatedButton.icon(
                 onPressed: () async {
                   await Navigator.push(
@@ -88,8 +85,6 @@ class HomeScreen extends ConsumerWidget {
                 label: const Text('+ New Customer'),
               ),
               const SizedBox(height: 16),
-
-              // Search button
               OutlinedButton.icon(
                 onPressed: () {
                   Navigator.push(
@@ -101,8 +96,6 @@ class HomeScreen extends ConsumerWidget {
                 label: const Text('Search Customers'),
               ),
               const SizedBox(height: 32),
-
-              // Recent customers
               Text(
                 'Recent Customers',
                 style: Theme.of(context).textTheme.titleLarge,
@@ -117,8 +110,8 @@ class HomeScreen extends ConsumerWidget {
                           'No customers yet.\nTap "+ New Customer" to start.',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: Colors.grey,
-                              ),
+                            color: Colors.grey,
+                          ),
                         ),
                       );
                     }
@@ -132,8 +125,11 @@ class HomeScreen extends ConsumerWidget {
                             leading: CircleAvatar(
                               backgroundColor: Theme.of(context).colorScheme.primary,
                               child: Text(
-                                c.serialNumber.substring(c.serialNumber.length - 2),
-                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                c.serialNumber.length >= 2
+                                    ? c.serialNumber.substring(c.serialNumber.length - 2)
+                                    : c.serialNumber,
+                                style: const TextStyle(
+                                    color: Colors.white, fontWeight: FontWeight.bold),
                               ),
                             ),
                             title: Text(c.name, style: const TextStyle(fontWeight: FontWeight.w600)),

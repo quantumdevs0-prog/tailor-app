@@ -1,40 +1,17 @@
-# Shalwar Kameez Tailor – Offline Management App
+# untitled
 
-100% offline-first Flutter app for Pakistani shalwar kameez tailor shops.
+A new Flutter project.
 
-## Features
+## Getting Started
 
-- Add / Edit customers with auto serial numbers
-- Detailed Kameez + Shalwar measurements (inches)
-- Style preferences & notes
-- Full measurement history (never overwrite)
-- Fast search by Serial / Name / Phone
-- Completely offline (SQLite via Drift)
-- Material 3 + Riverpod
+This project is a starting point for a Flutter application.
 
-## How to open in Android Studio
+A few resources to get you started if this is your first Flutter project:
 
-1. Unzip the project
-2. Open Android Studio → **Open** → select the `shalwar_kameez_tailor` folder
-3. Wait for Flutter & Gradle sync
-4. Run these commands in the terminal (bottom of Android Studio):
+- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
+- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
 
-```bash
-flutter pub get
-dart run build_runner build --delete-conflicting-outputs
-```
-
-5. Press the green **Run** button (or `flutter run`)
-
-## Requirements
-
-- Flutter 3.16+ (stable)
-- Android Studio or VS Code with Flutter extension
-- Android emulator or real device (min SDK 21)
-
-## Notes
-
-- Serial numbers start from `000001` and auto-increment
-- Measurements support decimals (e.g. 15.5)
-- Editing a customer creates a **new** measurement entry and marks the previous one as history
-- No internet permission is required
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

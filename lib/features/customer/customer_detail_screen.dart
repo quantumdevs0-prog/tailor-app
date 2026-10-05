@@ -6,13 +6,13 @@ import '../../providers/database_provider.dart';
 import 'add_edit_customer_screen.dart';
 
 final customerDetailProvider =
-    FutureProvider.family<Customer?, int>((ref, id) async {
+FutureProvider.family<Customer?, int>((ref, id) async {
   final db = ref.watch(databaseProvider);
   return db.getCustomerById(id);
 });
 
 final measurementHistoryProvider =
-    StreamProvider.family<List<Measurement>, int>((ref, customerId) {
+StreamProvider.family<List<Measurement>, int>((ref, customerId) {
   final db = ref.watch(databaseProvider);
   return db.watchMeasurementHistory(customerId);
 });
@@ -57,7 +57,6 @@ class CustomerDetailScreen extends ConsumerWidget {
           return ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              // Header card
               Card(
                 color: Theme.of(context).colorScheme.primaryContainer,
                 child: Padding(
@@ -67,8 +66,8 @@ class CustomerDetailScreen extends ConsumerWidget {
                       Text(
                         '#${customer.serialNumber}',
                         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -90,8 +89,6 @@ class CustomerDetailScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Current measurements
               Text('Current Measurements',
                   style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
@@ -112,23 +109,17 @@ class CustomerDetailScreen extends ConsumerWidget {
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Text('Error: $e'),
               ),
-
               const SizedBox(height: 28),
               Text('Measurement History',
                   style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
               historyAsync.when(
                 data: (list) {
-                  if (list.isEmpty) {
-                    return const Text('No history yet.');
-                  }
+                  if (list.isEmpty) return const Text('No history yet.');
                   return Column(
-                    children: list.map((m) {
-                      return _MeasurementCard(
-                        measurement: m,
-                        isCurrent: m.isCurrent,
-                      );
-                    }).toList(),
+                    children: list
+                        .map((m) => _MeasurementCard(measurement: m, isCurrent: m.isCurrent))
+                        .toList(),
                   );
                 },
                 loading: () => const SizedBox.shrink(),
@@ -176,8 +167,10 @@ class _MeasurementCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: const TextStyle(color: Colors.black54)),
-          Text('${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1)} in',
-              style: const TextStyle(fontWeight: FontWeight.w600)),
+          Text(
+            '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1)} in',
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
         ],
       ),
     );
@@ -201,11 +194,14 @@ class _MeasurementCard extends StatelessWidget {
                       color: Colors.green.shade100,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text('CURRENT',
-                        style: TextStyle(
-                            color: Colors.green.shade800,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12)),
+                    child: Text(
+                      'CURRENT',
+                      style: TextStyle(
+                        color: Colors.green.shade800,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
                   ),
                 const Spacer(),
                 Text(
@@ -215,7 +211,11 @@ class _MeasurementCard extends StatelessWidget {
               ],
             ),
             const Divider(height: 20),
-            Text('Kameez', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+            Text('Kameez',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(fontWeight: FontWeight.bold)),
             _row('Length', measurement.length),
             _row('Shoulder', measurement.shoulder),
             _row('Chest', measurement.chest),
@@ -224,7 +224,11 @@ class _MeasurementCard extends StatelessWidget {
             _row('Neck', measurement.neck),
             _row('Daman', measurement.daman),
             const SizedBox(height: 8),
-            Text('Shalwar', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+            Text('Shalwar',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(fontWeight: FontWeight.bold)),
             _row('Length', measurement.shalwarLength),
             _row('Waist', measurement.shalwarWaist),
             _row('Bottom', measurement.shalwarBottom),
@@ -232,7 +236,11 @@ class _MeasurementCard extends StatelessWidget {
                 measurement.shape != null ||
                 measurement.notes != null) ...[
               const SizedBox(height: 8),
-              Text('Style', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+              Text('Style',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(fontWeight: FontWeight.bold)),
               if (measurement.collarStyle != null)
                 Text('Collar: ${measurement.collarStyle}'),
               if (measurement.shape != null) Text('Shape: ${measurement.shape}'),

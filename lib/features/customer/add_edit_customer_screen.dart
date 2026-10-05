@@ -6,7 +6,7 @@ import '../../data/database/app_database.dart';
 import '../../providers/database_provider.dart';
 
 class AddEditCustomerScreen extends ConsumerStatefulWidget {
-  final Customer? customer; // null = new, otherwise edit
+  final Customer? customer;
 
   const AddEditCustomerScreen({super.key, this.customer});
 
@@ -21,7 +21,6 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
   late TextEditingController _phoneController;
   late TextEditingController _serialController;
 
-  // Measurement controllers
   late TextEditingController _lengthCtrl;
   late TextEditingController _shoulderCtrl;
   late TextEditingController _chestCtrl;
@@ -72,9 +71,7 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
   Future<void> _loadNextSerial() async {
     final db = ref.read(databaseProvider);
     final serial = await db.generateNextSerial();
-    if (mounted) {
-      setState(() => _serialController.text = serial);
-    }
+    if (mounted) setState(() => _serialController.text = serial);
   }
 
   Future<void> _loadCurrentMeasurement() async {
@@ -114,7 +111,6 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
 
     try {
       if (_isEdit) {
-        // Update customer
         final updated = widget.customer!.copyWith(
           name: _nameController.text.trim(),
           phone: Value(_phoneController.text.trim().isEmpty
@@ -124,7 +120,6 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
         );
         await db.updateCustomer(updated);
 
-        // Add new measurement (history preserved)
         await db.addMeasurement(MeasurementsCompanion.insert(
           customerId: widget.customer!.id,
           measuredAt: now,
@@ -144,7 +139,6 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
           notes: Value(_notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim()),
         ));
       } else {
-        // New customer
         final customerId = await db.insertCustomer(CustomersCompanion.insert(
           serialNumber: _serialController.text,
           name: _nameController.text.trim(),
@@ -245,7 +239,6 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              // Serial (read-only)
               TextFormField(
                 controller: _serialController,
                 decoration: const InputDecoration(
@@ -256,8 +249,6 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               const SizedBox(height: 16),
-
-              // Name
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(
@@ -266,11 +257,9 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
                 ),
                 textCapitalization: TextCapitalization.words,
                 validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? 'Name is required' : null,
+                (v == null || v.trim().isEmpty) ? 'Name is required' : null,
               ),
               const SizedBox(height: 16),
-
-              // Phone
               TextFormField(
                 controller: _phoneController,
                 decoration: const InputDecoration(
@@ -281,12 +270,10 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
                 keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: 28),
-
-              // Kameez section
               Text('Kameez Measurements',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      )),
+                    fontWeight: FontWeight.bold,
+                  )),
               const SizedBox(height: 12),
               _numField('Length', _lengthCtrl),
               _numField('Shoulder', _shoulderCtrl),
@@ -295,22 +282,20 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
               _numField('Sleeve', _sleeveCtrl),
               _numField('Neck', _neckCtrl),
               _numField('Daman', _damanCtrl),
-
               const SizedBox(height: 20),
               Text('Shalwar Measurements',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      )),
+                    fontWeight: FontWeight.bold,
+                  )),
               const SizedBox(height: 12),
               _numField('Shalwar Length', _shalwarLengthCtrl),
               _numField('Shalwar Waist', _shalwarWaistCtrl),
               _numField('Bottom (Pancha)', _shalwarBottomCtrl),
-
               const SizedBox(height: 20),
               Text('Style Preferences',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      )),
+                    fontWeight: FontWeight.bold,
+                  )),
               const SizedBox(height: 12),
               TextFormField(
                 controller: _collarCtrl,
@@ -336,16 +321,15 @@ class _AddEditCustomerScreenState extends ConsumerState<AddEditCustomerScreen> {
                 ),
                 maxLines: 3,
               ),
-
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _isLoading ? null : _save,
                 child: _isLoading
                     ? const SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                      )
+                  height: 24,
+                  width: 24,
+                  child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                )
                     : Text(_isEdit ? 'UPDATE CUSTOMER' : 'SAVE CUSTOMER'),
               ),
               const SizedBox(height: 20),

@@ -5,7 +5,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFF1B5E20), // Deep green – professional for tailor
+        seedColor: const Color(0xFF1B5E20),
         brightness: Brightness.light,
       ),
       appBarTheme: const AppBarTheme(

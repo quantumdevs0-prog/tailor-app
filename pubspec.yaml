@@ -1,32 +1,29 @@
-name: shalwar_kameez_tailor
-description: Offline-first Shalwar Kameez Tailor Management App for Pakistani tailor shops.
-publish_to: 'none'
-version: 1.0.0+1
+  cat > pubspec.yaml << 'EOF'
+  name: shalwar_kameez_tailor
+  description: Offline-first Shalwar Kameez Tailor Management App for Pakistani tailor shops.
+  publish_to: 'none'
+  version: 1.0.0+1
 
-environment:
-  sdk: '>=3.2.0 <4.0.0'
+  environment:
+    sdk: '>=3.2.0 <4.0.0'
 
-dependencies:
+  dependencies:
+    flutter:
+      sdk: flutter
+    flutter_riverpod: ^2.5.1
+    drift: ^2.18.0
+    sqlite3_flutter_libs: ^0.5.24
+    path_provider: ^2.1.4
+    path: ^1.9.0
+    intl: ^0.19.0
+    cupertino_icons: ^1.0.8
+
+  dev_dependencies:
+    flutter_test:
+      sdk: flutter
+    flutter_lints: ^4.0.0
+    drift_dev: ^2.18.0
+    build_runner: ^2.4.12
+
   flutter:
-    sdk: flutter
-  flutter_riverpod: ^2.5.1
-  riverpod_annotation: ^2.3.5
-  drift: ^2.18.0
-  sqlite3_flutter_libs: ^0.5.24
-  path_provider: ^2.1.4
-  path: ^1.9.0
-  intl: ^0.19.0
-  cupertino_icons: ^1.0.8
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^4.0.0
-  drift_dev: ^2.18.0
-  build_runner: ^2.4.12
-  riverpod_generator: ^2.4.3
-  custom_lint: ^0.6.4
-  riverpod_lint: ^2.3.10
-
-flutter:
-  uses-material-design: true
+    uses-material-design: true
